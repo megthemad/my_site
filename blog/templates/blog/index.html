@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+My Blog
+{% endblock %}
+
+{% block css-files %}
+    <link rel="stylesheet" href="{% static 'blog/post.css' %}">
+    <link rel="stylesheet" href="{% static 'blog/index.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section id='welcome'>
+        <header>
+            <img src="{% static 'blog/images/entire-observable-universe-logarithmic-illustration.jpg' %}" alt='A picture of Megan' />
+            <h2>My blog!</h2>
+        </header>
+        <p>Welcome to my blog! Here you can find all my latest posts and updates.</p>
+    </section>
+
+    <section id='latest-posts'>
+            <h2>Latest Posts</h2>
+        <ul>
+            {% for post in posts %}
+                {% include "blog/includes/post.html" %}
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section id='about'>
+        <h2>What I do </h2>
+        <p>I am a software engineer with a passion for writing and sharing knowledge. 
+            I love to explore new technologies and share my experiences through this blog.
+        </p>
+        <p>In my free time, I enjoy hiking, reading, and spending time with my family and friends.
+        </p>
+    </section>
+{% endblock %}

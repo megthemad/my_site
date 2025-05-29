@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="{% static "app.css" %}">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% block css-files %}{% endblock %}
+    </head>
+    <heeader if='main-navigation'>
+        <h1><a href="{% url "starting-page" %}">Megan's Blog</a></h1>
+        <nav>
+            <a href="{% url "posts-page" %}">All Posts</a>
+        </nav>
+    </header>
+    <body>
+        {% block content %}{% endblock %}
+        </body>
+</html>
