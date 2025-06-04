@@ -30,7 +30,7 @@ class Post(models.Model):
     content = models.TextField(default="", blank=True)
     excerpt = models.CharField(default="", max_length=20)
     image = models.CharField(default="mountains.jpg", max_length=100)
-    date = models.DateField(auto_now=True)
+    date = models.DateField(auto_now=False)
     author = models.ForeignKey(
         Author, on_delete=models.SET_NULL, related_name="posts", null=True)
     post_slug = models.SlugField(
@@ -54,3 +54,14 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.captions
+
+
+class Comment(models.Model):
+    user_name = models.CharField(max_length=100)
+    user_email = models.EmailField
+    date = models.DateField(auto_now=True)
+    post = models.ForeignKey(
+        Post, on_delete=models.cascade, related_name="comments", null=True)
+
+    def __str__(self):
+        return self.user_name
