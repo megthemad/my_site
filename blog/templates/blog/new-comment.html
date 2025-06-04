@@ -1,0 +1,9 @@
+{% extends "reviews/base.html" %}
+
+{% block title %}Comment{% endblock %}
+</head>
+{% block content %}
+  <a href="{% url 'all-posts' %}">Back to posts</a>
+  <p>{{ form }}</p>
+{% endblock %}
+</html>
