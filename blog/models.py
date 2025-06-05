@@ -30,6 +30,7 @@ class Post(models.Model):
     content = models.TextField(default="", blank=True)
     excerpt = models.CharField(default="", max_length=20)
     image = models.CharField(default="mountains.jpg", max_length=100)
+    email = models.EmailField(default="email@server.com")
     date = models.DateField(auto_now=False)
     author = models.ForeignKey(
         Author, on_delete=models.SET_NULL, related_name="posts", null=True)
@@ -58,7 +59,7 @@ class Tag(models.Model):
 
 class Comment(models.Model):
     user_name = models.CharField(max_length=100)
-    user_email = models.EmailField
+    user_email = models.EmailField(default="email@server.com")
     date = models.DateField(auto_now=True)
     text = models.TextField(max_length=400)
     post = models.ForeignKey(
