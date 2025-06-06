@@ -12,12 +12,25 @@
 {% block content %}
 <section id="summary"> 
     <h2>{{ post.title }}</h2>
-    <ul>
+    <div>
         {% for tag in post.tags.all %}
             <span class="tag">{{ tag.captions }}</span>
         {% endfor %}
-    </ul>
+    </div>
+    <div id='read-later'>
+        <form action='{% url "read-later" %}' method='POST'>
+            {% csrf_token %}
+            <input type='hidden' value='{{ post.id }}' name='post_id'>
+            <button>
+                {% if saved_for_later %}
+                Remove from Read Later list
+                {% else %}
+                Read Later
+                {% endif %}
+            </button>
+        </form>
     <article>
+        {% comment %} <img src="{{ post.image.url }}" alt="{{ post.title }}" /> {% endcomment %}
         <img src="{% static "blog/images/"|add:post.image %}" alt="{{ post.title }}" />
         <!-- If we had an email field in our model, could use {{ post.email }} instead of hard coding an address-->
         <address><a href="mailto:megan.knight@broadridge.com>">{{ post.author }}</a></address>
@@ -27,17 +40,37 @@
     </article>
 </section>
 
+{% if comment_form.errors %}
+<div id='alert'>
+    <h2>Saving the comment failed!</h2>
+    <p>Please check the comment form below and fix your errors.</p>
+    <a href="#comment-form">Fix!</a>
+</div>
+{% endif %}
+
 <main>
     {{ post.content|linebreaks }}
 </main>
 
+
+<section id='comments'>
+    <ul>
+        {% for comment in comments %}
+            <li>
+                <h2>{{ comment.user_name }}</h2>
+                <p>{{ comment.text|linebreaks }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+
+</section>
 <section id='comment-form'>
     <h2>Your Comment</h2>
     <!-- This will save the comment into the DB -->
-    <form action='{% url "post-detail-page" post.post_slug %}' method='POST'>
+    <form action='{% url "post-detail-page" post.post_slug %}' method='POST' novalidate>
         {% csrf_token %}
         {% for form_field in comment_form %}
-            <div class='form-control'>
+            <div class='form-control {% if form_field.errors %}invalid{% endif %}'>
                 {{ form_field.label_tag }}
                 {{ form_field }}
                 {{ form_field.errors }}
