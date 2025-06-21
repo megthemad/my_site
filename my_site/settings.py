@@ -31,7 +31,8 @@ DEBUG = getenv('IS_DEVELOPMENT', True)
 # If the environment variable is not set, it defaults to True
 
 ALLOWED_HOSTS = [
-    getenv('APP_HOST')
+    getenv('APP_HOST'),
+    '127.0.0.1', 'localhost'
 ]
 
 
